@@ -15,7 +15,7 @@
 
 <ion-content padding>
 
-  <img src='assets/img/beep-logo.png' alt='Logo' class='logo'>
+  <img src='assets/img/beep-logo.png' alt='Logo'>
 
   <ion-card>
     <ion-card-content>
@@ -28,8 +28,11 @@
         <ion-input type='password'></ion-input>
       </ion-item>
       <ion-row>
-        <button ion-button>Register</button>
-        <button ion-button>Login</button>
+        <div>
+          <button ion-button (click)='navigateToPage("RegisterPage")'
+            color='secondary'>Register</button>
+          <button ion-button>Login</button>
+        </div>
       </ion-row>
     </ion-card-content>
   </ion-card>
