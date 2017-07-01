@@ -1,4 +1,4 @@
-import { User } from '../../models/user/user'
+import { User } from '../../models/user/user.interface'
 
 const userList: User[] = [
   { firstName: 'Conrado', lastName: 'Buhrer', email: 'conrado@buhrer.net', avatar: 'assets/img/profile-placeholder.png' },

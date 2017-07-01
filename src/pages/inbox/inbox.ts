@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { Message } from '../../models/message/message';
+import { Message } from '../../models/message/message.interface';
 
-import { MESSAGE_LIST } from '../../mocks/message/message';
+import { MESSAGE_LIST } from '../../mocks/message/message.mock';
 
 /**
  * Generated class for the InboxPage page.
