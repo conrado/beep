@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { DataProvider } from '../../providers/data/data.provider';
+
+import { User } from 'firebase/app';
 import { LoginResponse } from '../../models/login/login-response.interface';
 
 /**
@@ -16,6 +20,7 @@ import { LoginResponse } from '../../models/login/login-response.interface';
 export class LoginPage {
 
   constructor(
+    private dataPrv: DataProvider,
     private navCtrl: NavController,
     private navParams: NavParams,
     private toastCtrl: ToastController) {
@@ -27,6 +32,10 @@ export class LoginPage {
         message: `Welcome to Beep, ${event.result.email}`,
         duration: 3000
       }).present();
+      this.dataPrv.getProfile(<User>event.result).subscribe(profile => {
+        console.log(profile);
+        profile.val() ? this.navCtrl.setRoot('TabsPage') : this.navCtrl.setRoot('EditProfilePage');
+      })
       this.navCtrl.setRoot('EditProfilePage')
     }
     else {

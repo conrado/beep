@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AuthProvider } from '../../providers/auth/auth.provider';
@@ -21,9 +21,13 @@ export class EditProfileFormComponent implements OnDestroy {
 
   private authenticatedUserObsrv$: Subscription;
   private authenticatedUser: User;
+
+  @Output() saveProfileResult: EventEmitter<Boolean>;
+
   profile = {} as Profile;
 
   constructor(private dataPrv: DataProvider, private authPrv: AuthProvider) {
+    this.saveProfileResult = new EventEmitter<Boolean>();
     this.authenticatedUserObsrv$ = this.authPrv.getAuthenticatedUser().subscribe((user: User) => {
       this.authenticatedUser = user;
     })
@@ -33,7 +37,7 @@ export class EditProfileFormComponent implements OnDestroy {
     if(this.authenticatedUser) {
       this.profile.email = this.authenticatedUser.email;
       const result = await this.dataPrv.saveProfile(this.authenticatedUser, this.profile);
-      console.log(result);
+      this.saveProfileResult.emit(result);
     }
   }
 
