@@ -16,6 +16,10 @@ export class AuthProvider {
   constructor(private afAuth: AngularFireAuth) {
   }
 
+  getAuthenticatedUser() {
+    return this.afAuth.authState;
+  }
+
   async createUserWithEmailAndPassword(account: Account) {
     try {
       return <LoginResponse> {
