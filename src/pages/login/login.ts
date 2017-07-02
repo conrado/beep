@@ -18,19 +18,19 @@ export class LoginPage {
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private toast: ToastController) {
+    private toastCtrl: ToastController) {
   }
 
   login(event: LoginResponse) {
     if(!event.error){
-      this.toast.create({
+      this.toastCtrl.create({
         message: `Welcome to Beep, ${event.result.email}`,
         duration: 3000
       }).present();
       this.navCtrl.setRoot('ProfilePage')
     }
     else {
-      this.toast.create({
+      this.toastCtrl.create({
         message: event.error.message,
         duration: 3000
       }).present();
