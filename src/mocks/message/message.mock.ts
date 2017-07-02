@@ -1,9 +1,9 @@
 import { Message } from '../../models/message/message.interface'
-import { User } from '../../models/user/user.interface'
+import { Profile } from '../../models/profile/profile.interface'
 
-import { USER_LIST } from '../user/user.mock'
+import { PROFILE_LIST } from '../profile/profile.mock'
 
-const userList = USER_LIST;
+const userList = PROFILE_LIST;
 const messageList: Message[] = [];
 
 userList.forEach(user => {
