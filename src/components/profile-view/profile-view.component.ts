@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoadingController, Loading } from 'ionic-angular';
+
+import { AuthProvider } from '../../providers/auth/auth.provider';
+import { DataProvider } from '../../providers/data/data.provider';
+
+import { Profile } from '../../models/profile/profile.interface';
 
 /**
  * Generated class for the ProfileViewComponent component.
@@ -10,13 +16,25 @@ import { Component } from '@angular/core';
   selector: 'app-profile-view',
   templateUrl: 'profile-view.component.html'
 })
-export class ProfileViewComponent {
+export class ProfileViewComponent implements OnInit {
 
-  text: string;
+  userProfile: Profile;
+  loader: Loading;
 
-  constructor() {
-    console.log('Hello ProfileViewComponent Component');
-    this.text = 'Hello World';
+  constructor(private loadingCtrl: LoadingController, private dataPrv: DataProvider, private authPrv: AuthProvider) {
+    this.loader = this.loadingCtrl.create({
+      content: 'Loading profile...'
+    })
+  }
+
+  ngOnInit(): void {
+    this.loader.present();
+    this.authPrv.getAuthenticatedUser().subscribe(user => {
+      this.dataPrv.getProfile(user).subscribe((profile) => {
+        this.userProfile = <Profile>profile.val();
+        this.loader.dismiss();
+      })
+    })
   }
 
 }

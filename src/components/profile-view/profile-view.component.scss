@@ -1,3 +1,11 @@
-profile-view {
+.profile-view__image-container {
+  background-color: #54d3bf;
+  height: 220px;
+  position: relative;
+}
 
+.profile-view__image {
+  height: 200px;
+  max-height: 200px;
+  @include centerer;
 }
