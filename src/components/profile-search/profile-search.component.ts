@@ -23,10 +23,12 @@ export class ProfileSearchComponent {
   }
 
   searchUser(query: string) {
-    this.dataPrv.searchUser(query).subscribe(profiles => {
-      this.profileList = profiles;
-    })
-
+    const trimmedQuery = query.trim();
+    if(trimmedQuery === query) {
+      this.dataPrv.searchUser(query).subscribe(profiles => {
+        this.profileList = profiles;
+      })
+    }
   }
 
 }
