@@ -5,6 +5,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { EditProfileFormComponent } from './edit-profile/edit-profile-form.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
+import { ProfileSearchComponent } from './profile-search/profile-search.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ProfileViewComponent } from './profile-view/profile-view.component';
     RegisterFormComponent,
     EditProfileFormComponent,
     ProfileViewComponent,
+    ProfileSearchComponent,
   ],
   imports: [IonicModule],
   exports: [
@@ -19,6 +21,7 @@ import { ProfileViewComponent } from './profile-view/profile-view.component';
     RegisterFormComponent,
     EditProfileFormComponent,
     ProfileViewComponent,
+    ProfileSearchComponent,
   ]
 })
 
