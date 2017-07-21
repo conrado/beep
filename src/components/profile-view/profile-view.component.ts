@@ -6,12 +6,6 @@ import { DataProvider } from '../../providers/data/data.provider';
 
 import { Profile } from '../../models/profile/profile.interface';
 
-/**
- * Generated class for the ProfileViewComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
 @Component({
   selector: 'app-profile-view',
   templateUrl: 'profile-view.component.html'
@@ -23,7 +17,11 @@ export class ProfileViewComponent implements OnInit {
 
   @Output() existingProfile: EventEmitter<Profile>;
 
-  constructor(private loadingCtrl: LoadingController, private dataPrv: DataProvider, private authPrv: AuthProvider) {
+  constructor(
+    private loadingCtrl: LoadingController,
+    private dataPrv: DataProvider,
+    private authPrv: AuthProvider
+  ) {
     this.existingProfile = new EventEmitter<Profile>();
     this.loader = this.loadingCtrl.create({
       content: 'Loading profile...'
@@ -32,12 +30,10 @@ export class ProfileViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader.present();
-    this.authPrv.getAuthenticatedUser().subscribe(user => {
-      this.dataPrv.getProfile(user).subscribe((profile) => {
-        this.userProfile = <Profile>profile.val();
-        this.existingProfile.emit(this.userProfile);
+    this.dataPrv.getAuthenticatedUserProfile().subscribe( profile => {
+      this.userProfile = profile;
+      this.existingProfile.emit(this.userProfile);
         this.loader.dismiss();
-      })
     })
   }
 
