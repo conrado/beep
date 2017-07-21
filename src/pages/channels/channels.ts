@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+
+import { ChatProvider } from '../../providers/chat/chat.provider';
 
 /**
  * Generated class for the ChannelsPage page.
@@ -14,11 +16,37 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ChannelsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private navCtrl: NavController,
+    private navParams: NavParams,
+    private alertCtrl: AlertController,
+    private chatPrv: ChatProvider
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChannelsPage');
+  }
+
+  showAddChannelDialog(){
+    this.alertCtrl.create({
+      title: 'Channel Name',
+      inputs: [{
+        name: 'channelName'
+      }],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Add',
+          handler: data => {
+            this.chatPrv.addChannel(data.channelName)
+          }
+        }
+      ]
+    }).present();
   }
 
 }
