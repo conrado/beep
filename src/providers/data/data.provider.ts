@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
+import { database } from 'firebase';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
@@ -60,6 +61,22 @@ export class DataProvider {
       console.error(e);
       return false;
     }
+  }
+
+  setUserOnline(profile: Profile) {
+    const ref = database().ref(`online-users/${profile.$key}`);
+    try {
+      ref.update({ ...profile });
+      ref.onDisconnect().remove();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  getOnlineUsers(): FirebaseListObservable<Profile[]> {
+    return this.database.list(`online-users`);
+
   }
 
 }
