@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
+import { Observable } from 'rxjs/Observable';
+
 import { ChatProvider } from '../../providers/chat/chat.provider';
 
-/**
- * Generated class for the ChannelsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { Channel } from '../../models/channel/channel.interface';
+
 @IonicPage()
 @Component({
   selector: 'page-channels',
@@ -16,16 +14,14 @@ import { ChatProvider } from '../../providers/chat/chat.provider';
 })
 export class ChannelsPage {
 
+  channelList: Observable<Channel[]>;
+
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
     private alertCtrl: AlertController,
     private chatPrv: ChatProvider
   ) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChannelsPage');
   }
 
   showAddChannelDialog(){
@@ -47,6 +43,14 @@ export class ChannelsPage {
         }
       ]
     }).present();
+  }
+
+  ionViewWillLoad() {
+    this.getChannels();
+  }
+
+  getChannels() {
+    this.channelList = this.chatPrv.getChannelListRef();
   }
 
 }
