@@ -24,3 +24,10 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+## Deploy to firebase
+
+```bash
+$ npm install -g firebase-tools
+$ firebase login
+$ firebase deploy
+```
