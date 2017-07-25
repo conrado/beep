@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
-
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/observable/forkJoin';
+import {
+  AngularFireDatabase,
+  FirebaseListObservable
+} from 'angularfire2/database';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AuthProvider } from '../../providers/auth/auth.provider';
 
 import { Channel } from '../../models/channel/channel.interface';
 import { ChannelMessage } from '../../models/channel-message/channel-message.interface';
@@ -12,9 +18,9 @@ import { Message } from '../../models/message/message.interface';
 export class ChatProvider {
 
   constructor(
-    private database: AngularFireDatabase
+    private database: AngularFireDatabase,
+    private authPrv: AuthProvider
   ) {
-    console.log('Hello ChatProvider Provider');
   }
 
   addChannel(channelName: string) {
@@ -35,6 +41,22 @@ export class ChatProvider {
 
   async sendChat(message: Message) {
     await this.database.list(`/messages`).push(message);
+  }
+
+  getChats(userTwoId: string) {
+    return this.authPrv.getAuthenticatedUser()
+      .map(auth => auth.uid)
+      .mergeMap(uid => this.database.list(`/user-messages/${uid}/${userTwoId}`))
+      .mergeMap(chats => {
+        return Observable.forkJoin(
+          chats.map(chat => this.database.object(`/messages/${chat.$key}`)
+          .first()),
+          (...vals: Message[]) => {
+            console.log(vals);
+            return vals;
+          }
+        )
+      })
   }
 
 }

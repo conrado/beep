@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Observable } from 'rxjs/Observable';
+
 import { DataProvider } from '../../providers/data/data.provider';
 import { ChatProvider } from '../../providers/chat/chat.provider';
 
 import { Profile } from '../../models/profile/profile.interface';
 import { Message } from '../../models/message/message.interface';
-
-import { MESSAGE_LIST } from '../../mocks/message/message.mock';
 
 @IonicPage()
 @Component({
@@ -17,7 +17,7 @@ import { MESSAGE_LIST } from '../../mocks/message/message.mock';
 export class MessagePage {
 
   selectedProfile: Profile;
-  messageList: Message[];
+  messageList: Observable<Message[]>;
   userId: string;
   userProfile: Profile;
 
@@ -27,7 +27,6 @@ export class MessagePage {
     private dataPrv: DataProvider,
     private chatPrv: ChatProvider
   ) {
-    this.messageList = MESSAGE_LIST;
   }
 
   ionViewWillLoad() {
@@ -37,6 +36,7 @@ export class MessagePage {
         this.userProfile = profile;
         this.userId = profile.$key;
       });
+    this.messageList = this.chatPrv.getChats(this.selectedProfile.$key);
   }
 
   async sendMessage(content: string) {
