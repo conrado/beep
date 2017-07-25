@@ -16,7 +16,7 @@ export class ChatMessageComponent {
 
   @Input() chatMessage: Message;
 
-  @Input() chatIndex: number;
+  @Input() userId: string;
 
   constructor() {
   }
