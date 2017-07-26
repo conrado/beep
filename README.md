@@ -1,21 +1,29 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# conrado/beep
+
+This is beyond just a starter template for the ionic 3 framework.
+
+It is the result of following an Udemy course to completion:
+
+https://www.udemy.com/learn-ionic-3-from-scratch/
+
+Bellow you will find the instructions that came with generating the ionic
+template which may help you run the code:
 
 ## How to use this template
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
-
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+*This template does not work on its own*. You will need to install ionic and
+cordova, as well as firebase. I also recommend installing nvm and using node
+v7.10 as that is what it was built and tested with, without troubles.
 
 ### With the Ionic CLI:
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+Install ionic and cordova:
 
 ```bash
 $ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
 ```
 
-Then, to run it, cd into `myBlank` and run:
+To run a simulator `cd` into this project's root directory and run:
 
 ```bash
 $ ionic cordova platform add ios
@@ -24,7 +32,32 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
-## Deploy to firebase
+Development is often best done on
+
+### Developing on firebase
+
+This project also requires firebase, you require a project on their service so
+visit their page, create an account and configure the proper settings file to
+point to the correct endpoint:
+
+- Visit https://firebase.google.com
+- Edit: `src/app/app.firebase.config.ts`
+
+It should look like this:
+```
+export const FIREBASE_CONFIG = {
+  apiKey: "NOTAREALKEY8907DF6WLKJHjjJjpmdUXH_0Y38U",
+  authDomain: "beep-00000.firebaseapp.com",
+  databaseURL: "https://beep-00000.firebaseio.com",
+  projectId: "beep-00000",
+  storageBucket: "beep-00000.appspot.com",
+  messagingSenderId: "234098250987"
+};
+```
+
+### Deploy to firebase
+
+In order to upload content to the firebase hosting and functions run:
 
 ```bash
 $ npm install -g firebase-tools
